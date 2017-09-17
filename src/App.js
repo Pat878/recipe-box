@@ -3,144 +3,98 @@ import { Form, Text, Select, FormError } from 'react-form'
 import logo from './logo.svg';
 import './App.css';
 
-let count = 0;
-var target = document.getElementById("answer")
-
-function createDiv(){ var diver = document.createElement("div")
-target.appendChild(diver)}
-
-const MyForm = (
-
-
-  <Form
-    onSubmit={(values) => {
-      count += 1
-      createDiv()
-      document.createElement("div").setAttribute("id", count)
-      let reesh = values.friends.map(function(v){
-
-        return //console.log(sheesh)// document.getElementById(sheesh).innerHTML = "<h1>" + v.name + "</h1>"
-
-      })
-      //  document.getElementById("remove").addEventListener("click", function(){alert("yes")});
-    }}
-
-    // Let's give the form some default values
-    defaultValues={{
-      friends: []
-    }}
-
-    // Validating your form is super easy, just use the `validate` life-cycle method
-    /*    validate={values => {
-    const { friends } = values
-    return {
-
-    friends: (!friends || !friends.length) ? 'You need at least one friend!' : friends.map(friend => {
-    const { name, relationship } = friend
-    return {
-    name: !name ? 'A name is required' : undefined,
-    relationship: !relationship ? 'A relationship is required' : undefined
+class TaskList extends React.Component{
+  deleteElement (){
+    console.log("remove");
   }
-})
-}
-}} */
 
-// `onValidationFail` is another handy form life-cycle method
-onValidationFail={() => {
-  window.alert('There is something wrong with your form!  Please check for any required values and try again :)')
-}}
->
-  {({ values, submitForm, addValue, removeValue, getError }) => {
-    // A Form's direct child will usually be a function that returns a component
-    // This way you have access to form methods and form values to use in your component. See the docs for a complete list.
-    return (
-      // When the form is submitted, call the `submitForm` callback prop
-      <form onSubmit={submitForm}>
+  render(){
 
+    const displayTask  = function(task, taskIndex){
+      console.log("NEW ADDED TASK"+task);
 
-        {/* Arrays in forms are super easy to handle */}
-        <h6>Recipe Name:</h6>
-        {/* This is a custom form error for the root of the friends list (see validation function) */}
-        <FormError field='friends' />
-        <div className='nested'>
-          {!values.friends.length ? (
-            <em>No friends have been added yet</em>
-          ) : values.friends.map((friends, i) => ( // Loop over the values however you'd like
-          <div key={i}>
+      return (<li>
+        {task}
 
-            <div>
-              <h6>Ingredients</h6>
-              <Text
-                field={['friends', i, 'name']} // You can easily pass an array-style field path. Perfect for passing down as props or nested values
-                placeholder='Friend Name'
-              />
-            </div>
+        <button onClick= {this.deleteElement}> Delete </button>
+      </li> )
+    };
 
-            <div>
-              <h6>Relationship</h6>
-              <Select
-                field={`friends.${i}.relationship`} // If you don't like arrays, you can also use a string template
-                options={[{
-                  label: 'Friend',
-                  value: 'friend'
-                }, {
-                  label: 'Acquaintance',
-                  value: 'acquaintance'
-                }, {
-                  label: 'Colleague',
-                  value: 'colleague'
-                }]}
-              />
-            </div>
-
-            <button // This button will remove this friend from the `friends` field
-            type='button'
-            onClick={() => removeValue('friends', i)} // `removeValue` takes a field location for an array, and the index for the item to remove
-            >
-              Remove Friend
-            </button>
-
-          </div>
-        ))}
-      </div>
-
-      <div>
-        <button // This button will add a new blank friend item to the `friends` field
-        type='button'
-        onClick={() => addValue('friends', {})} // `addValue` takes an array-like field, and the value to add
-        >
-          Add Friend
-        </button>
-      </div>
-
-
-
-      <br />
-      <br />
-
-      {/* // Since this is the parent form, let's put a submit button in there ;) */}
-      {/* // You can submit your form however you want, as long as you call the `submitForm` callback */}
-      <button>
-        Submit
-      </button>
-    </form>
-  )
-}}
-</Form>
-)
-
-class App extends Component {
-  render (){
-    return (
-
-      <div>
-        {MyForm}
-
-        <div id="answer"></div>
-        <div id="answer2"></div>
-      </div>
-    )
+    return (<ul>
+      {this.props.items.map((task, taskIndex) =>
+        <li key={taskIndex}>
+          Recipe Name:
+          {task}<br/>
+          <button onClick={this.props.deleteTask} value={taskIndex}> Delete </button>
+        </li>
+      )}
+    </ul>);
   }
-}
+};
+
+class App extends React.Component{
+  constructor(props) {
+    super(props)
+    this.state = {
+      items: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
+      task: '',
+      ingredients: ' '
+
+    }
+
+    this.deleteTask = this.deleteTask.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onChange2 = this.onChange2.bind(this);
+    this.addTask = this.addTask.bind(this);
+  }
+
+
+  deleteTask(e) {
+    var taskIndex = parseInt(e.target.value, 10);
+    console.log('remove task: %d', taskIndex, this.state.items[taskIndex]);
+    this.setState(state => {
+      state.items.splice(taskIndex, 1);
+      return {items: state.items};
+    });
+  }
+
+  onChange (e) {
+    this.setState({ task: e.target.value
+    });
+  }
+
+  onChange2(e){
+    this.setState({ingredients: e.target.value})
+  }
+
+
+  addTask (e){
+    this.setState({
+      items: this.state.items.concat(["Recipe: " + this.state.task]),
+
+
+      task: '',
+      ingredients: ''
+    })
+
+    e.preventDefault();
+  }
+
+  render(){
+    return(
+      <div>
+        <h1>My Task </h1>
+        <TaskList items={this.state.items} deleteTask={this.deleteTask} />
+
+        <form onSubmit={this.addTask}>
+          Recipe Name: <input onChange={this.onChange} type="text" value={this.state.task}/><br/>
+          Ingredients: <input onChange={this.onChange2} type="text" value={this.state.ingredients}/><br/>
+          <button> Add Recipe </button>
+        </form>
+      </div>
+    );
+  }
+};
+
 
 export default App;
