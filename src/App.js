@@ -28,11 +28,10 @@ class TaskList extends React.Component{
           {this.props.items.map((task, taskIndex) =>
 
             <li key={taskIndex}>
-              Recipe Name:
-              {task}<br/>
+
+              <b>{task}</b><br/>
               <ul>
-                <b>Ingredients:</b>
-                {this.props.ingredients[taskIndex]}
+                <li>{this.props.ingredients[taskIndex]}</li>
               </ul>
               <button onClick={this.props.deleteTask} value={taskIndex}> Delete </button>
             </li>
@@ -56,7 +55,8 @@ class App extends React.Component{
     this.state = {
       items: ['PumpkinPie', 'FruityLoops', 'ChickenMarang'],
       task: '',
-      ingredients: ['pumpkin, lumpkins', 'fruits and loops','chicken, pie']
+      ingredients: ['pumpkin, lumpkins', 'fruits and loops','chicken, pie'],
+      ingredient: ''
 
     }
 
@@ -72,25 +72,25 @@ class App extends React.Component{
     console.log('remove task: %d', taskIndex, this.state.items[taskIndex]);
     this.setState(state => {
       state.items.splice(taskIndex, 1);
-      return {items: state.items};
+      state.ingredients.splice(taskIndex, 1);
+      return {items: state.items, ingredients: state.ingredients};
     });
   }
 
   onChange (e) {
-    this.setState({ task: e.target.value
-    });
+    this.setState({ task: e.target.value});
   }
 
   onChange2(e){
-    this.setState({ingredients: e.target.value})
+    this.setState({ingredient: e.target.value})
   }
-
 
   addTask (e){
     this.setState({
-      items: this.state.items.concat(["Recipe: " + this.state.task]),
+      items: this.state.items.concat([this.state.task]),
       task: '',
-      ingredients: ''
+      ingredients: this.state.ingredients.concat([this.state.ingredient]),
+      ingredient: ''
     })
 
     e.preventDefault();
@@ -104,7 +104,7 @@ class App extends React.Component{
 
         <form onSubmit={this.addTask}>
           Recipe Name: <input onChange={this.onChange} type="text" value={this.state.task}/><br/>
-          Ingredients: <input onChange={this.onChange2} type="text" value={this.state.ingredients}/><br/>
+          Ingredients: <input onChange={this.onChange2} type="text" value={this.state.ingredient}/><br/>
           <button> Add Recipe </button>
         </form>
       </div>
