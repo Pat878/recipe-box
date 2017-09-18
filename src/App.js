@@ -15,20 +15,38 @@ class TaskList extends React.Component{
 
       return (<li>
         {task}
-
         <button onClick= {this.deleteElement}> Delete </button>
       </li> )
     };
 
-    return (<ul>
-      {this.props.items.map((task, taskIndex) =>
-        <li key={taskIndex}>
-          Recipe Name:
-          {task}<br/>
-          <button onClick={this.props.deleteTask} value={taskIndex}> Delete </button>
-        </li>
-      )}
-    </ul>);
+    //let objects = [{item: {this.props.items}, ingredient: {this.props.ingredients}, /* others */];
+
+    return (
+      <div>
+
+        <ul>
+          {this.props.items.map((task, taskIndex) =>
+
+            <li key={taskIndex}>
+              Recipe Name:
+              {task}<br/>
+              <ul>
+                <b>Ingredients:</b>
+                {this.props.ingredients[taskIndex]}
+              </ul>
+              <button onClick={this.props.deleteTask} value={taskIndex}> Delete </button>
+            </li>
+          )}
+        </ul>
+
+
+
+      </div>
+
+
+
+
+    );
   }
 };
 
@@ -36,9 +54,9 @@ class App extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
-      items: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
+      items: ['PumpkinPie', 'FruityLoops', 'ChickenMarang'],
       task: '',
-      ingredients: ' '
+      ingredients: ['pumpkin, lumpkins', 'fruits and loops','chicken, pie']
 
     }
 
@@ -71,8 +89,6 @@ class App extends React.Component{
   addTask (e){
     this.setState({
       items: this.state.items.concat(["Recipe: " + this.state.task]),
-
-
       task: '',
       ingredients: ''
     })
@@ -84,7 +100,7 @@ class App extends React.Component{
     return(
       <div>
         <h1>My Task </h1>
-        <TaskList items={this.state.items} deleteTask={this.deleteTask} />
+        <TaskList items={this.state.items} ingredients={this.state.ingredients} deleteTask={this.deleteTask} />
 
         <form onSubmit={this.addTask}>
           Recipe Name: <input onChange={this.onChange} type="text" value={this.state.task}/><br/>
