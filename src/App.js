@@ -21,14 +21,20 @@ class TaskList extends React.Component{
               <ul>
                 <li>{this.props.ingredients[taskIndex]}</li>
               </ul>
-              <input className={editValue == taskIndex ? "active" : "inactive"}
-                onChange={this.props.onUpdate} value={this.props.newingredient} type="text"/>
-              <button className={editValue == taskIndex ? "active" : "inactive"}
-                onClick={this.props.deleteTask} value={taskIndex}> Delete </button>
+
+              <div className={editValue == taskIndex ? "active" : "inactive"}>
+
+                <input onChange={this.props.onUpdate} value={this.props.newingredient}
+                  type="text"/>
+                  <button onClick={this.props.deleteTask} value={taskIndex}> Delete </button>
+                  <button onClick={this.props.updateRecipe}> Update </button>
+                  <button onClick={this.props.noUpdate}> X </button>
+
+                </div>
+
                 <button className={editValue == taskIndex || null ? "inactive" : "active"}
                   onClick={this.props.editTask} value={taskIndex} > Edit </button>
-                  <button className={editValue == taskIndex ? "active" : "inactive"} onClick={this.props.addTask}> Update </button>
-                  <button className={editValue == taskIndex ? "active" : "inactive"} onClick={this.props.noUpdate}> X </button>
+
                 </li>
               )}
             </ul>
@@ -99,43 +105,46 @@ class TaskList extends React.Component{
         this.setState({edit: null, newingredient: ""})
       }
 
-      updateRecipe(e){
-        var taskIndex = parseInt(e.target.value, 10);
-        this.setState({
-          items: this.state.items.concat([this.state.task]),
-          task: '',
-          ingredients: this.state.ingredients.map((ingredient,i) =>{}),
-          ingredient: '',
-          newingredient: ''
-        }) }
+      updateRecipe(){
+        let recipeIndex = this.state.edit;
+        let ingredientArray = this.state.ingredients;
+        let updatedIngredients = [].concat(ingredientArray);
+        if (this.state.newingredient != "") {
+          updatedIngredients[recipeIndex] = this.state.newingredient; }
+          this.setState({
+            task: '',
+            ingredients: updatedIngredients,
+            ingredient: '',
+            newingredient: ''
+          }) }
 
-        onUpdate (e) {
-          this.setState({ newingredient: e.target.value});
-        }
-
-
-        render(){
-
-          return(
-            <div>
-              <h1>My Task </h1>
-              <TaskList items={this.state.items} ingredients={this.state.ingredients}
-                newingredient={this.state.newingredient}
-                deleteTask={this.deleteTask} editTask={this.editTask}
-                edit={this.state.edit} noUpdate={this.noUpdate}
-                updateRecipe={this.updateRecipe} addTask={this.addTask}
-                ingredient={this.state.ingredient}
-                onUpdate={this.onUpdate}/>
-
-                <form onSubmit={this.addTask}>
-                  Recipe Name: <input onChange={this.onChange} type="text" value={this.state.task}/><br/>
-                  Ingredients: <input onChange={this.onChange2} type="text" value={this.state.ingredient} /><br/>
-                  <button> Add Recipe </button>
-                </form>
-              </div>
-            );
+          onUpdate (e) {
+            this.setState({ newingredient: e.target.value});
           }
-        };
 
 
-        export default App;
+          render(){
+
+            return(
+              <div>
+                <h1>My Task </h1>
+                <TaskList items={this.state.items} ingredients={this.state.ingredients}
+                  newingredient={this.state.newingredient}
+                  deleteTask={this.deleteTask} editTask={this.editTask}
+                  edit={this.state.edit} noUpdate={this.noUpdate}
+                  updateRecipe={this.updateRecipe} addTask={this.addTask}
+                  ingredient={this.state.ingredient}
+                  onUpdate={this.onUpdate}/>
+
+                  <form onSubmit={this.addTask}>
+                    Recipe Name: <input onChange={this.onChange} type="text" value={this.state.task}/><br/>
+                    Ingredients: <input onChange={this.onChange2} type="text" value={this.state.ingredient} /><br/>
+                    <button> Add Recipe </button>
+                  </form>
+                </div>
+              );
+            }
+          };
+
+
+          export default App;
