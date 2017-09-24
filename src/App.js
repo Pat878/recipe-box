@@ -15,11 +15,12 @@ class TaskList extends React.Component{
       <div>
 
         <div className="btn-group">
-          {this.props.items.map((task, taskIndex) =>
+          {this.props.items.map((task, buttonIndex) =>
             <Button
+              key={buttonIndex}
               bsStyle="primary"
               onClick={this.props.editTask}
-              value={taskIndex}>
+              value={buttonIndex}>
               {task}
             </Button>
           )}
@@ -38,8 +39,7 @@ class TaskList extends React.Component{
               <Button onClick={this.props.updateRecipe} bsStyle="success"> Update </Button>
               <Button onClick={this.props.deleteTask} value={this.props.edit} bsStyle="danger"> Delete </Button>
 
-              { //    <button onClick={this.props.noUpdate}> X </button> }
-            }
+
 
           </Modal.Body>
           <Modal.Footer>
@@ -56,7 +56,7 @@ class App extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
-      items: ['PumpkinPie', 'FruityLoops', 'ChickenMarang'],
+      items: ["pump","bump","dump"],
       task: '',
       ingredients: ['pumpkin, lumpkins', 'fruits and loops','chicken, pie'],
       ingredient: '',
@@ -70,10 +70,8 @@ class App extends React.Component{
     this.onChange2 = this.onChange2.bind(this);
     this.addTask = this.addTask.bind(this);
     this.editTask = this.editTask.bind(this);
-    this.noUpdate = this.noUpdate.bind(this);
     this.updateRecipe = this.updateRecipe.bind(this);
     this.onUpdate = this.onUpdate.bind(this);
-    this.open = this.open.bind(this);
     this.close = this.close.bind(this);
 
   }
@@ -115,10 +113,6 @@ class App extends React.Component{
 
     }
 
-    noUpdate(){
-      this.setState({edit: null, newingredient: ""})
-    }
-
     updateRecipe(){
       let recipeIndex = this.state.edit;
       let ingredientArray = this.state.ingredients;
@@ -130,67 +124,78 @@ class App extends React.Component{
           ingredients: updatedIngredients,
           ingredient: '',
           newingredient: ''
-        }) }
+        })
 
-        onUpdate (e) {
-          this.setState({ newingredient: e.target.value});
-        }
+      }
 
-        open() {
-          this.setState({ showModal: true });
-        }
+      onUpdate (e) {
+        this.setState({ newingredient: e.target.value});
+      }
 
-        close() {
-          this.setState({ showModal: false });
-        }
+      close() {
+        this.setState({ showModal: false, edit: null });
+      }
 
+      //The following code for localStorage was taken from this answer:
+      //https://stackoverflow.com/questions/43480207/how-should-i-implement-saving-state-to-localstorage
 
-        render(){
+      componentDidUpdate() {
+        window.localStorage.setItem('state', JSON.stringify(this.state));
+      }
 
-          return(
-            <div className="container">
+      componentDidMount() {
+        // there is a chance the item does not exist
+        // or the json fails to parse
+        try {
+          const state = window.localStorage.getItem('state');
+          this.setState({ ...JSON.parse(state) });
+        } catch (e) {}
+      }
+
+      render(){
+
+        return(
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12 text-center">
+                <h1>My Recipes </h1>
+              </div>
+            </div>
+            <div className="well">
+
               <div className="row">
-                <div className="col-lg-12 text-center">
-                  <h1>My Recipes </h1>
-                </div>
-              </div>
-              <div className="well">
-
-                <div className="row">
-                  <div className="col-lg-8 col-lg-offset-4">
-                    <TaskList items={this.state.items} ingredients={this.state.ingredients}
-                      newingredient={this.state.newingredient}
-                      deleteTask={this.deleteTask} editTask={this.editTask}
-                      edit={this.state.edit} noUpdate={this.noUpdate}
-                      updateRecipe={this.updateRecipe} addTask={this.addTask}
-                      ingredient={this.state.ingredient}
-                      onUpdate={this.onUpdate} showModal={this.state.showModal}
-                      open={this.open} close={this.close}/>
-
-
-
-                    </div>
-                  </div>
-                </div>
-
-
-
-                <form onSubmit={this.addTask} className="form-horizontal">
-                  <div className="form-group">
-                    Recipe Name: <input className="form-control" onChange={this.onChange} type="text" value={this.state.task}/><br/>
-
-                    Ingredients: <input className="form-control" onChange={this.onChange2} type="text" value={this.state.ingredient} /><br/>
-
-                    <button className="btn btn-success"> Add New Recipe </button>
+                <div className="col-lg-8">
+                  <TaskList items={this.state.items} ingredients={this.state.ingredients}
+                    newingredient={this.state.newingredient}
+                    deleteTask={this.deleteTask} editTask={this.editTask}
+                    edit={this.state.edit} updateRecipe={this.updateRecipe}
+                    addTask={this.addTask} ingredient={this.state.ingredient}
+                    onUpdate={this.onUpdate} showModal={this.state.showModal}
+                    close={this.close}/>
 
 
                   </div>
-                </form>
+                </div>
               </div>
 
-            );
-          }
-        };
 
+              <form onSubmit={this.addTask} className="form-horizontal">
+                <div className="form-group row">
+                  <div className="col-sm-6 col-sm-offset-3">
+                  Recipe Name: <input className="form-control" onChange={this.onChange} type="text" value={this.state.task}/><br/>
 
-        export default App;
+                  Ingredients: <input className="form-control" onChange={this.onChange2} type="text" value={this.state.ingredient} /><br/>
+
+                  <button className="btn btn-success"> Add New Recipe </button>
+                </div>
+                
+
+                </div>
+              </form>
+
+        </div>
+          );
+        }
+      };
+
+      export default App;
