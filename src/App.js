@@ -130,7 +130,6 @@ class RecipeList extends React.Component{
 
           editRecipe(e) {
             var taskIndex = parseInt(e.target.value, 10);
-            console.log(taskIndex)
             this.setState({edit: e.target.value,
               newingredient: this.state.ingredients[taskIndex],
               showModal: true, newRecipe: this.state.recipes[taskIndex]})
