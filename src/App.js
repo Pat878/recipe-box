@@ -87,7 +87,7 @@ class RecipeList extends React.Component{
         this.deleteRecipe = this.deleteRecipe.bind(this);
         this.onChange = this.onChange.bind(this);
         this.onChange2 = this.onChange2.bind(this);
-        this.addTask = this.addTask.bind(this);
+        this.addRecipe = this.addRecipe.bind(this);
         this.editTask = this.editTask.bind(this);
         this.updateRecipe = this.updateRecipe.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
@@ -115,7 +115,7 @@ class RecipeList extends React.Component{
           this.setState({ingredient: e.target.value})
         }
 
-        addTask (e){
+        addRecipe (e){
 
           if (this.state.task != "") {
 
@@ -214,7 +214,7 @@ class RecipeList extends React.Component{
                               newingredient={this.state.newingredient}
                               deleteRecipe={this.deleteRecipe} editTask={this.editTask}
                               edit={this.state.edit} updateRecipe={this.updateRecipe}
-                              addTask={this.addTask} ingredient={this.state.ingredient}
+                              addRecipe={this.addRecipe} ingredient={this.state.ingredient}
                               onUpdate={this.onUpdate} showModal={this.state.showModal}
                               close={this.close} newRecipe={this.state.newRecipe}
                               onUpdateName={this.onUpdateName}
@@ -227,7 +227,7 @@ class RecipeList extends React.Component{
                         </div>
 
 
-                        <form onSubmit={this.addTask} className="form-horizontal">
+                        <form onSubmit={this.addRecipe} className="form-horizontal">
                           <div className="form-group row">
                             <div className="col-sm-6 col-sm-offset-3">
                               Recipe Name: <input className="form-control" onChange={this.onChange}
