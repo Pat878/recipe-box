@@ -15,13 +15,13 @@ class RecipeList extends React.Component{
       <div>
 
         <div className="btn-group">
-          {this.props.items.map((task, buttonIndex) =>
+          {this.props.items.map((recipe, buttonIndex) =>
             <Button
               key={buttonIndex}
               bsStyle="primary"
               onClick={this.props.editRecipe}
               value={buttonIndex}>
-              {task}
+              {recipe}
             </Button>
           )}
         </div>
@@ -73,7 +73,7 @@ class RecipeList extends React.Component{
         super(props)
         this.state = {
           items: ["pump","bump","dump"],
-          task: '',
+          recipe: '',
           ingredients: ['pumpkin, lumpkins', 'fruits and loops','chicken, pie'],
           ingredient: '',
           edit: null,
@@ -108,7 +108,7 @@ class RecipeList extends React.Component{
         }
 
         onChange (e) {
-          this.setState({ task: e.target.value});
+          this.setState({ recipe: e.target.value});
         }
 
         onChange2(e){
@@ -117,11 +117,11 @@ class RecipeList extends React.Component{
 
         addRecipe (e){
 
-          if (this.state.task != "") {
+          if (this.state.recipe != "") {
 
             this.setState({
-              items: this.state.items.concat([this.state.task]),
-              task: '',
+              items: this.state.items.concat([this.state.recipe]),
+              recipe: '',
               ingredients: this.state.ingredients.concat([this.state.ingredient]),
               ingredient: ''
             }) }
@@ -152,7 +152,7 @@ class RecipeList extends React.Component{
                   updatedRecipes[recipeIndex] = this.state.newRecipe; }
                   else {alert("Recipe must have a name!")}
                   this.setState({
-                    task: '',
+                    recipe: '',
                     items: updatedRecipes,
                     ingredients: updatedIngredients,
                     ingredient: ''
@@ -231,7 +231,7 @@ class RecipeList extends React.Component{
                           <div className="form-group row">
                             <div className="col-sm-6 col-sm-offset-3">
                               Recipe Name: <input className="form-control" onChange={this.onChange}
-                                type="text" value={this.state.task}/><br/>
+                                type="text" value={this.state.recipe}/><br/>
 
                                 Ingredients: <input className="form-control" onChange={this.onChange2}
                                   type="text" value={this.state.ingredient} /><br/>
