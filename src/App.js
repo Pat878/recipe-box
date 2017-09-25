@@ -42,7 +42,7 @@ class RecipeList extends React.Component{
               value={this.props.newRecipe}
               type="text"/>
               <Button onClick={this.props.updateRecipe} bsStyle="success"> Update </Button>
-              <Button onClick={this.props.deleteTask} value={this.props.edit}
+              <Button onClick={this.props.deleteRecipe} value={this.props.edit}
                 bsStyle="danger"> Delete </Button>
 
 
@@ -84,7 +84,7 @@ class RecipeList extends React.Component{
           ingredientAlert: false
         }
 
-        this.deleteTask = this.deleteTask.bind(this);
+        this.deleteRecipe = this.deleteRecipe.bind(this);
         this.onChange = this.onChange.bind(this);
         this.onChange2 = this.onChange2.bind(this);
         this.addTask = this.addTask.bind(this);
@@ -97,7 +97,7 @@ class RecipeList extends React.Component{
         this.closeIngredientAlert = this.closeIngredientAlert.bind(this);
       }
 
-      deleteTask(e) {
+      deleteRecipe(e) {
         var taskIndex = parseInt(e.target.value, 10);
         this.setState(state => {
           state.items.splice(taskIndex, 1);
@@ -212,7 +212,7 @@ class RecipeList extends React.Component{
                             <RecipeList items={this.state.items}
                               ingredients={this.state.ingredients}
                               newingredient={this.state.newingredient}
-                              deleteTask={this.deleteTask} editTask={this.editTask}
+                              deleteRecipe={this.deleteRecipe} editTask={this.editTask}
                               edit={this.state.edit} updateRecipe={this.updateRecipe}
                               addTask={this.addTask} ingredient={this.state.ingredient}
                               onUpdate={this.onUpdate} showModal={this.state.showModal}
