@@ -1,4 +1,9 @@
+# React Recipe Box
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+
+Here are the project [guidlines](https://www.freecodecamp.org/challenges/build-a-recipe-box).
+Here is a [resource](https://jsfiddle.net/fooey/t37Lk6p4/) I used to help me get started.
 
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
