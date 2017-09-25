@@ -114,8 +114,8 @@ class RecipeList extends React.Component{
         }
 
         addRecipe (e){
-
-          if (this.state.recipe != "") {
+console.log(this.state.recipe !== "")
+          if (this.state.recipe !== "") {
 
             this.setState({
               recipes: this.state.recipes.concat([this.state.recipe]),
@@ -142,10 +142,10 @@ class RecipeList extends React.Component{
               let recipeArray = this.state.recipes;
               let updatedIngredients = [].concat(ingredientArray);
               let updatedRecipes = [].concat(recipeArray);
-              if (this.state.newingredient != "") {
+              if (this.state.newingredient !== "") {
                 updatedIngredients[recipeIndex] = this.state.newingredient; }
                 else {this.setState({ingredientAlert: true})}
-                if (this.state.newRecipe != "") {
+                if (this.state.newRecipe !== "") {
                   updatedRecipes[recipeIndex] = this.state.newRecipe; }
                   else {alert("Recipe must have a name!")}
                   this.setState({
