@@ -19,7 +19,7 @@ class RecipeList extends React.Component{
             <Button
               key={buttonIndex}
               bsStyle="primary"
-              onClick={this.props.editTask}
+              onClick={this.props.editRecipe}
               value={buttonIndex}>
               {task}
             </Button>
@@ -88,7 +88,7 @@ class RecipeList extends React.Component{
         this.onChange = this.onChange.bind(this);
         this.onChange2 = this.onChange2.bind(this);
         this.addRecipe = this.addRecipe.bind(this);
-        this.editTask = this.editTask.bind(this);
+        this.editRecipe = this.editRecipe.bind(this);
         this.updateRecipe = this.updateRecipe.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
         this.close = this.close.bind(this);
@@ -130,7 +130,7 @@ class RecipeList extends React.Component{
             e.preventDefault();
           }
 
-          editTask(e) {
+          editRecipe(e) {
             var taskIndex = parseInt(e.target.value, 10);
             console.log(taskIndex)
             this.setState({edit: e.target.value,
@@ -212,7 +212,7 @@ class RecipeList extends React.Component{
                             <RecipeList items={this.state.items}
                               ingredients={this.state.ingredients}
                               newingredient={this.state.newingredient}
-                              deleteRecipe={this.deleteRecipe} editTask={this.editTask}
+                              deleteRecipe={this.deleteRecipe} editRecipe={this.editRecipe}
                               edit={this.state.edit} updateRecipe={this.updateRecipe}
                               addRecipe={this.addRecipe} ingredient={this.state.ingredient}
                               onUpdate={this.onUpdate} showModal={this.state.showModal}
