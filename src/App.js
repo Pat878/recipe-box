@@ -114,7 +114,7 @@ class RecipeList extends React.Component{
         }
 
         addRecipe (e){
-console.log(this.state.recipe !== "")
+
           if (this.state.recipe !== "") {
 
             this.setState({
