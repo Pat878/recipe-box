@@ -4,7 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import { Modal, Button } from 'react-bootstrap';
 
-class TaskList extends React.Component{
+class RecipeList extends React.Component{
 
 
   render(){
@@ -209,7 +209,7 @@ class TaskList extends React.Component{
 
                         <div className="row">
                           <div className="col-lg-8">
-                            <TaskList items={this.state.items}
+                            <RecipeList items={this.state.items}
                               ingredients={this.state.ingredients}
                               newingredient={this.state.newingredient}
                               deleteTask={this.deleteTask} editTask={this.editTask}
