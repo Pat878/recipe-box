@@ -15,7 +15,7 @@ class RecipeList extends React.Component{
       <div>
 
         <div className="btn-group">
-          {this.props.items.map((recipe, buttonIndex) =>
+          {this.props.recipes.map((recipe, buttonIndex) =>
             <Button
               key={buttonIndex}
               bsStyle="primary"
@@ -28,7 +28,7 @@ class RecipeList extends React.Component{
 
         <Modal show={this.props.showModal} onHide={this.props.close}>
           <Modal.Header closeButton>
-            <Modal.Title ><strong>{this.props.items[this.props.edit]}</strong>
+            <Modal.Title ><strong>{this.props.recipes[this.props.edit]}</strong>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -72,7 +72,7 @@ class RecipeList extends React.Component{
       constructor(props) {
         super(props)
         this.state = {
-          items: ["pump","bump","dump"],
+          recipes: ["pump","bump","dump"],
           recipe: '',
           ingredients: ['pumpkin, lumpkins', 'fruits and loops','chicken, pie'],
           ingredient: '',
@@ -100,9 +100,9 @@ class RecipeList extends React.Component{
       deleteRecipe(e) {
         var taskIndex = parseInt(e.target.value, 10);
         this.setState(state => {
-          state.items.splice(taskIndex, 1);
+          state.recipes.splice(taskIndex, 1);
           state.ingredients.splice(taskIndex, 1);
-          return {items: state.items, ingredients: state.ingredients, edit: null,
+          return {recipes: state.recipes, ingredients: state.ingredients, edit: null,
             showModal: false};
           });
         }
@@ -120,7 +120,7 @@ class RecipeList extends React.Component{
           if (this.state.recipe != "") {
 
             this.setState({
-              items: this.state.items.concat([this.state.recipe]),
+              recipes: this.state.recipes.concat([this.state.recipe]),
               recipe: '',
               ingredients: this.state.ingredients.concat([this.state.ingredient]),
               ingredient: ''
@@ -135,14 +135,14 @@ class RecipeList extends React.Component{
             console.log(taskIndex)
             this.setState({edit: e.target.value,
               newingredient: this.state.ingredients[taskIndex],
-              showModal: true, newRecipe: this.state.items[taskIndex]})
+              showModal: true, newRecipe: this.state.recipes[taskIndex]})
 
             }
 
             updateRecipe(){
               let recipeIndex = this.state.edit;
               let ingredientArray = this.state.ingredients;
-              let recipeArray = this.state.items;
+              let recipeArray = this.state.recipes;
               let updatedIngredients = [].concat(ingredientArray);
               let updatedRecipes = [].concat(recipeArray);
               if (this.state.newingredient != "") {
@@ -153,7 +153,7 @@ class RecipeList extends React.Component{
                   else {alert("Recipe must have a name!")}
                   this.setState({
                     recipe: '',
-                    items: updatedRecipes,
+                    recipes: updatedRecipes,
                     ingredients: updatedIngredients,
                     ingredient: ''
                   })
@@ -209,7 +209,7 @@ class RecipeList extends React.Component{
 
                         <div className="row">
                           <div className="col-lg-8">
-                            <RecipeList items={this.state.items}
+                            <RecipeList recipes={this.state.recipes}
                               ingredients={this.state.ingredients}
                               newingredient={this.state.newingredient}
                               deleteRecipe={this.deleteRecipe} editRecipe={this.editRecipe}
