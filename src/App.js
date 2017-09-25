@@ -9,8 +9,6 @@ class RecipeList extends React.Component{
 
   render(){
 
-    const editValue = this.props.edit;
-
     return (
       <div>
 
