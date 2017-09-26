@@ -1,5 +1,6 @@
 {
   "name": "recipe-box",
+  "homepage": "https://pat878.github.io/recipe-box",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
