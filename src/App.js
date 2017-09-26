@@ -70,7 +70,7 @@ class RecipeList extends React.Component{
       constructor(props) {
         super(props)
         this.state = {
-          recipes: ["Pumpkin Pie", "Chicken Picatta", "Pizza"],
+          recipes: ["Pumpkin Pie", "Chicken Picata", "Pizza"],
           recipe: '',
           ingredients: ['eggs, pumpkins, magic', 'chicken, pumpkins, magic', 'pizza, pumpkins, magic'],
           ingredient: '',
