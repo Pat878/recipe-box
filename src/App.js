@@ -4,84 +4,6 @@ import logo from "./logo.svg";
 import "./App.css";
 import { Modal, Button } from "react-bootstrap";
 
-class RecipeList extends React.Component {
-  render() {
-    return (
-      <div>
-        <div className="btn-group">
-          {this.props.recipes.map((recipe, buttonIndex) => (
-            <Button
-              key={buttonIndex}
-              bsStyle="primary"
-              onClick={this.props.editRecipe}
-              value={buttonIndex}
-            >
-              {recipe}
-            </Button>
-          ))}
-        </div>
-
-        <Modal show={this.props.showModal} onHide={this.props.close}>
-          <Modal.Header closeButton>
-            <Modal.Title>
-              <strong>{this.props.recipes[this.props.edit]}</strong>
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <h4>{this.props.ingredients[this.props.edit]}</h4>
-            Ingredients:{" "}
-            <input
-              className="form-control"
-              onChange={this.props.onUpdate}
-              value={this.props.newingredient}
-              type="text"
-            />
-            Recipe Name:{" "}
-            <input
-              className="form-control"
-              onChange={this.props.onUpdateName}
-              value={this.props.newRecipe}
-              type="text"
-            />
-            <Button onClick={this.props.updateRecipe} bsStyle="success">
-              {" "}
-              Update{" "}
-            </Button>
-            <Button
-              onClick={this.props.deleteRecipe}
-              value={this.props.edit}
-              bsStyle="danger"
-            >
-              {" "}
-              Delete{" "}
-            </Button>
-            <div className={this.props.ingredientAlert ? "active" : "inactive"}>
-              <div className="alert alert-danger" role="alert">
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="alert"
-                  aria-label="Close"
-                  onClick={this.props.closeIngredientAlert}
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 className="alert-heading">Whoa there!</h4>
-                <p>Where are your ingredients?!</p>
-              </div>
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={this.props.close} bsStyle="primary">
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
-    );
-  }
-}
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -293,6 +215,84 @@ class App extends React.Component {
             <p>Enter a recipe name if you want to add a new recipe!</p>
           </div>
         </div>
+      </div>
+    );
+  }
+}
+
+class RecipeList extends React.Component {
+  render() {
+    return (
+      <div>
+        <div className="btn-group">
+          {this.props.recipes.map((recipe, buttonIndex) => (
+            <Button
+              key={buttonIndex}
+              bsStyle="primary"
+              onClick={this.props.editRecipe}
+              value={buttonIndex}
+            >
+              {recipe}
+            </Button>
+          ))}
+        </div>
+
+        <Modal show={this.props.showModal} onHide={this.props.close}>
+          <Modal.Header closeButton>
+            <Modal.Title>
+              <strong>{this.props.recipes[this.props.edit]}</strong>
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <h4>{this.props.ingredients[this.props.edit]}</h4>
+            Ingredients:{" "}
+            <input
+              className="form-control"
+              onChange={this.props.onUpdate}
+              value={this.props.newingredient}
+              type="text"
+            />
+            Recipe Name:{" "}
+            <input
+              className="form-control"
+              onChange={this.props.onUpdateName}
+              value={this.props.newRecipe}
+              type="text"
+            />
+            <Button onClick={this.props.updateRecipe} bsStyle="success">
+              {" "}
+              Update{" "}
+            </Button>
+            <Button
+              onClick={this.props.deleteRecipe}
+              value={this.props.edit}
+              bsStyle="danger"
+            >
+              {" "}
+              Delete{" "}
+            </Button>
+            <div className={this.props.ingredientAlert ? "active" : "inactive"}>
+              <div className="alert alert-danger" role="alert">
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="alert"
+                  aria-label="Close"
+                  onClick={this.props.closeIngredientAlert}
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 className="alert-heading">Whoa there!</h4>
+                <p>Where are your ingredients?!</p>
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.props.close} bsStyle="primary">
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     );
   }
